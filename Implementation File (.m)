@@ -1,0 +1,50 @@
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    
+    Ticket *ticket1 = [[Ticket alloc] initWithName:@"INC1234"type:@"Incident" status:@"Active" createdOn:@"Germany" createdBy:@"Jane Huntely" completionDate:@"Email" priority:@"4-Minor" category:@"Request" group:@"PIMS-EU-COG" DescriptionShort:@"PI Tag Not Working"  notes:@"1. All works corectly" ];
+    Ticket *ticket2 = [[Ticket alloc] initWithName:@"PRJ1234"type:@"Project" status:@"Resolved" createdOn:@"USA" createdBy:@"Dinesh" completionDate:@"Chat" priority:@"3-Minor" category:@"Request"  group:@"DNN-EU-COG" DescriptionShort:@"Issue with Variable" notes:@"1. All works corectly "];
+    Ticket *ticket3 = [[Ticket alloc] initWithName:@"ENC1234"type:@"Enhancement" status:@"Vendor Awaiting" createdOn:@"France" createdBy:@"Luca Franchino" completionDate:@"Email" priority:@"2-Minor" category:@"Request" group:@"PIMS-EU-COG" DescriptionShort:@"Wrong details"  notes:@"1. All works corectly "];
+    Ticket *ticket4 = [[Ticket alloc] initWithName:@"INC2345"type:@"Incident" status:@"Active" createdOn:@"India" createdBy:@"Markus" completionDate:@"Phone" priority:@"1-Major" category:@"Request" group:@"CRM-EU-COG" DescriptionShort:@"Wrong input paramter" notes:@"1. All works corectly"];
+    Ticket *ticket5 = [[Ticket alloc] initWithName:@"PRJ2345"type:@"Project" status:@"Pending" createdOn:@"Australia" createdBy:@"Antonio" completionDate:@"Phone" priority:@"4-Minor" category:@"Request"  group:@"CRM-EU-COG" DescriptionShort:@"Wrong output paramter" notes:@"1. All works corectly"];
+    Ticket *ticket6 = [[Ticket alloc] initWithName:@"ENC2345"type:@"Enhancement" status:@"Active" createdOn:@"USA" createdBy:@"Fabian" completionDate:@"Chat" priority:@"4-Minor" category:@"Request" group:@"KCP-EU-COG" DescriptionShort:@"Wrong region paramter"  notes:@"1. All works corectly"];
+    self.TicketsFinal= [NSMutableArray arrayWithObjects:ticket1,ticket2,ticket3,ticket4,ticket5,ticket6, nil];
+    NSLog(@"Member of: %@",groupFinal);
+    NSLog(@"Member of: %@",typeFinal);
+    NSLog(@"Member of: %@",statusFinal);
+    
+    NSPredicate *groupPredicate = [NSPredicate
+                                  predicateWithFormat:@"group = %@",groupFinal];
+    
+    NSPredicate *typePredicate = [NSPredicate
+                                  predicateWithFormat:@"type = %@",typeFinal];
+    
+    NSPredicate *statusPredicate = [NSPredicate
+                                    predicateWithFormat:@"status = %@", statusFinal];
+    
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate
+                                              andPredicateWithSubpredicates:@[groupPredicate,typePredicate,statusPredicate]];
+    
+    NSArray *result = [self.TicketsFinal filteredArrayUsingPredicate:compoundPredicate];
+    
+    self.TicketsFinal = result;
+    
+    if (typeFinal == @"All") {
+        if (statusFinal == @"All") {
+            self.TicketsFinal= [NSMutableArray arrayWithObjects:ticket1,ticket2,ticket3,ticket4,ticket5,ticket6, nil];
+            
+            NSPredicate *groupPredicate = [NSPredicate
+                                           predicateWithFormat:@"group = %@",groupFinal];
+            NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate
+                                                      andPredicateWithSubpredicates:@[groupPredicate]];
+            NSArray *result = [self.TicketsFinal filteredArrayUsingPredicate:compoundPredicate];
+            
+            self.TicketsFinal = result;
+        }
+    
+    }
+
+}
